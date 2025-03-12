@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Cafe Order Manager{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Cafe Order Manager</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'orders:list' %}">Заказы</a></li>
+                <li><a href="{% url 'orders:revenue' %}">Выручка</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Cafe Order Manager</p>
+    </footer>
+</body>
+</html>

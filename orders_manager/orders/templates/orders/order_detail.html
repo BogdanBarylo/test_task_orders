@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block title %}Детали заказа №{{ order.id }}{% endblock %}
+
+{% block content %}
+<h2>Детали заказа №{{ order.id }}</h2>
+<p><strong>Номер стола:</strong> {{ order.table_number }}</p>
+<p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+<p><strong>Общая стоимость:</strong> {{ order.total_price }}</p>
+
+<h3>Блюда:</h3>
+{% if order.items %}
+    <ul>
+        {% for item in order.items %}
+            <li>{{ item.name }} – {{ item.price }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Блюда не добавлены.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'orders:update' order.id %}">Изменить заказ</a> |
+    <a href="{% url 'orders:list' %}">Вернуться к списку заказов</a>
+</p>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+
+{% block title %}Выручка за смену{% endblock %}
+
+{% block content %}
+<h2>Общая выручка за смену</h2>
+<p><strong>Выручка:</strong> {{ revenue }}</p>
+<p><a href="{% url 'orders:list' %}">Вернуться к списку заказов</a></p>
+{% endblock %}
