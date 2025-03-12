@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+
+{% block title %}Список заказов{% endblock %}
+
+{% block content %}
+<h2>Список заказов</h2>
+<form method="get">
+    <label for="table_number">Номер стола:</label>
+    <input type="text" name="table_number" id="table_number">
+    <label for="status">Статус:</label>
+    <select name="status" id="status">
+        <option value="">Все</option>
+        <option value="pending">В ожидании</option>
+        <option value="ready">Готово</option>
+        <option value="paid">Оплачено</option>
+    </select>
+    <button type="submit">Найти</button>
+</form>
+<p><a href="{% url 'orders:create' %}">Добавить заказ</a></p>
+<table border="1" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Номер стола</th>
+        <th>Блюда</th>
+        <th>Общая стоимость</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.table_number }}</td>
+        <td>
+            <ul>
+                {% for item in order.items %}
+                <li>{{ item.name }} – {{ item.price }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>{{ order.total_price }}</td>
+        <td>{{ order.get_status_display }}</td>
+        <td>
+            <a href="{% url 'orders:detail' order.id %}">Просмотр</a> |
+            <a href="{% url 'orders:update' order.id %}">Изменить заказ</a> |
+            <a href="{% url 'orders:delete' order.id %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<p><a href="{% url 'orders:revenue' %}">Посмотреть выручку</a></p>
+{% endblock %}

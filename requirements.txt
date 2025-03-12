@@ -1,0 +1,5 @@
+Django>=4.0
+djangorestframework>=3.14
+python-dotenv>=0.21.0
+flake8>=6.0.0
+coverage>=7.0.0

@@ -1,0 +1,10 @@
+__pycache__/
+.venv/
+.env
+*.sqlite3
+staticfiles
+coverage.xml
+.coverage
+.mypy_cache
+.ruff_cache
+htmlcov

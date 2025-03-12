@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %}Изменить заказ №{{ order.id }}{% endblock %}
+
+{% block content %}
+<h2>Изменить заказ №{{ order.id }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить изменения</button>
+</form>
+<p>
+    <a href="{% url 'orders:detail' order.id %}">Отмена</a>
+</p>
+{% endblock %}
