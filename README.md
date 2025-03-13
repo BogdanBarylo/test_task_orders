@@ -15,7 +15,7 @@
 - Python 3.8+
 - Django 4+
 - Django REST Framework
-- SQLite (по умолчанию, можно использовать PostgreSQL)
+- SQLite
 - HTML/CSS
 
 ## Установка и запуск
