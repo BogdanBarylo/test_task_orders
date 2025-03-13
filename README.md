@@ -1,5 +1,4 @@
 [![Cafe Manager CI/CD](https://github.com/BogdanBarylo/test_task_orders/actions/workflows/github_actions.yml/badge.svg)](https://github.com/BogdanBarylo/test_task_orders/actions/workflows/github_actions.yml)
-
 [![codecov](https://codecov.io/github/BogdanBarylo/test_task_orders/graph/badge.svg?token=ZD3Q0UL2NL)](https://codecov.io/github/BogdanBarylo/test_task_orders)
 # test_task_orders
 
