@@ -4,11 +4,20 @@ from django.urls import reverse
 from .models import Order
 from .forms import OrderForm
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/ci-cd
 class OrderModelTest(TestCase):
     def setUp(self) -> None:
         self.order = Order.objects.create(
             table_number=1,
+<<<<<<< HEAD
             items=[{"name": "Салат", "price": 5.50}, {"name": "Суп", "price": 7.25}],
+=======
+            items=[{"name": "Салат", "price": 5.50},
+                   {"name": "Суп", "price": 7.25}],
+>>>>>>> feature/ci-cd
             status='pending'
         )
 
@@ -16,13 +25,24 @@ class OrderModelTest(TestCase):
         """Проверяет корректный расчет общей стоимости заказа."""
         self.order.refresh_from_db()
         expected_total = 5.50 + 7.25
+<<<<<<< HEAD
         self.assertAlmostEqual(self.order.total_price, expected_total, places=2)
+=======
+        self.assertAlmostEqual(
+            self.order.total_price, expected_total, places=2)
+
+>>>>>>> feature/ci-cd
 
 class OrderFormTest(TestCase):
     def test_valid_items_json(self) -> None:
         form_data = {
             "table_number": 2,
+<<<<<<< HEAD
             "items": '[{"name": "Салат", "price": 5.50}, {"name": "Суп", "price": 7.25}]'
+=======
+            "items": '[{"name": "Салат", "price": 5.50},'
+            '{"name": "Суп", "price": 7.25}]'
+>>>>>>> feature/ci-cd
         }
         form = OrderForm(data=form_data)
         self.assertTrue(form.is_valid(), msg=form.errors)
@@ -36,6 +56,10 @@ class OrderFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("Некорректный формат JSON", str(form.errors))
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/ci-cd
 class OrderViewsTest(TestCase):
     def setUp(self) -> None:
         self.client = Client()
@@ -100,6 +124,10 @@ class OrderViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, str(paid_order.total_price))
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/ci-cd
 class OrderListFilteringTest(TestCase):
     def setUp(self) -> None:
         self.client = Client()
@@ -137,7 +165,17 @@ class OrderListFilteringTest(TestCase):
 
     def test_filter_by_table_and_status(self) -> None:
         url = reverse('orders:list')
+<<<<<<< HEAD
         response = self.client.get(url, {"table_number": "2", "status": "ready"})
         self.assertEqual(response.status_code, 200)
         orders = response.context['orders']
         self.assertTrue(all(order.table_number == 2 and order.status == "ready" for order in orders))
+=======
+        response = self.client.get(url, {"table_number": "2",
+                                         "status": "ready"})
+        self.assertEqual(response.status_code, 200)
+        orders = response.context['orders']
+        self.assertTrue(all(
+            order.table_number == 2 and order.status == "ready"
+            for order in orders))
+>>>>>>> feature/ci-cd

@@ -7,4 +7,9 @@ coverage.xml
 .coverage
 .mypy_cache
 .ruff_cache
+<<<<<<< HEAD
 htmlcov
+=======
+htmlcov
+.pytest_cache
+>>>>>>> feature/ci-cd

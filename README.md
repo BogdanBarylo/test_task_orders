@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 # Cafe Order Manager
+=======
+# test_task_orders
+
+>>>>>>> feature/ci-cd
 
 ## Описание
 Данное приложение разработано на Django и предназначено для управления заказами в кафе. Система позволяет:
@@ -45,4 +50,9 @@ DJANGO_SECRET_KEY=YOUR SECRET KEY
 
 Приложение предоставляет REST API для работы с заказами. Для доступа к API перейдите по адресу:
 
+<<<<<<< HEAD
 http://127.0.0.1:8000/orders/api/
+=======
+http://127.0.0.1:8000/orders/api/
+>>>>>>> 34557b2 (add final version project)
+>>>>>>> feature/ci-cd

@@ -25,13 +25,25 @@ class Migration(migrations.Migration):
                 (
                     "table_number",
                     models.IntegerField(
+<<<<<<< HEAD
                         validators=[django.core.validators.MinValueValidator(1)]
+=======
+                        validators=[
+                            django.core.validators.MinValueValidator(1)]
+>>>>>>> feature/ci-cd
                     ),
                 ),
                 (
                     "items",
                     models.JSONField(
+<<<<<<< HEAD
                         help_text="Список заказанных блюд с ценами, например: [{'name': 'Салат', 'price': 5.50}, {'name': 'Суп', 'price': 7.25}]"
+=======
+                        help_text="Список заказанных блюд с ценами,"
+                        " например: "
+                        "[{'name': 'Салат', 'price': 5.50}, "
+                        "{'name': 'Суп', 'price': 7.25}]"
+>>>>>>> feature/ci-cd
                     ),
                 ),
                 (
