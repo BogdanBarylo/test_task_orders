@@ -27,7 +27,7 @@ jobs:
           flake8 orders_manager
       - name: Run tests and generate coverage report with pytest
         run: |
-          pytest --cov-branch --cov-report=xml
+          pytest orders_manager/orders/tests.py --ds=orders_manager.settings --cov=orders_manager --cov-branch --cov-report=xml -v
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
