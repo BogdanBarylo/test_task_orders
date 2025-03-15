@@ -3,9 +3,9 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from typing import List
+from typing import List, Tuple
 
-ORDER_STATUS_CHOICES: List[tuple[str, str]] = [
+ORDER_STATUS_CHOICES: List[Tuple[str, str]] = [
     ("pending", "В ожидании"),
     ("ready", "Готово"),
     ("paid", "Оплачено"),
