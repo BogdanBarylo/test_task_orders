@@ -9,10 +9,10 @@
 <p><strong>Общая стоимость:</strong> {{ order.total_price }}</p>
 
 <h3>Блюда:</h3>
-{% if order.items %}
+{% if order.order_items.all %}
     <ul>
-        {% for item in order.items %}
-            <li>{{ item.name }} – {{ item.price }}</li>
+        {% for item in order.order_items.all %}
+            <li>{{ item.name }} – {{ item.price }} (Количество: {{ item.quantity }})</li>
         {% endfor %}
     </ul>
 {% else %}
@@ -20,7 +20,8 @@
 {% endif %}
 
 <p>
-    <a href="{% url 'orders:update' order.id %}">Изменить заказ</a> |
+    <a href="{% url 'orders:update' order.id %}">Изменить статус заказа</a> |
+    <a href="{% url 'orders:add_item' order.id %}">Добавить блюдо</a> |
     <a href="{% url 'orders:list' %}">Вернуться к списку заказов</a>
 </p>
 {% endblock %}

@@ -1,17 +1,11 @@
-from __future__ import annotations
 from typing import Any
 from django.urls import reverse_lazy
-from django.views.generic import (
-    ListView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    DetailView,
-)
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Sum
 from .models import Order
+from .forms import OrderForm, OrderItemForm, OrderItemFormSet
 
 
 class OrderListView(ListView):
@@ -40,20 +34,39 @@ class OrderDetailView(DetailView):
     context_object_name: str = "order"
 
 
-class OrderCreateView(CreateView):
-    model = Order
-    template_name: str = "orders/order_form.html"
-    fields: list[str] = ["table_number", "items"]
-    success_url: str = reverse_lazy("orders:list")
-
-    def form_valid(self, form: Any) -> Any:
-        return super().form_valid(form)
+def create_order_with_items(request: HttpRequest) -> HttpResponse:
+    """
+    Представление для создания заказа с одновременным добавлением блюд.
+    Пользователь вводит номер стола, а затем
+    через inline formset добавляет блюда.
+    Новый заказ создается со статусом "pending" (в ожидании).
+    """
+    if request.method == "POST":
+        order_form = OrderForm(request.POST)
+        formset = OrderItemFormSet(request.POST)
+        if order_form.is_valid() and formset.is_valid():
+            order = order_form.save(commit=False)
+            order.status = "pending"
+            order.save()
+            order_items = formset.save(commit=False)
+            for item in order_items:
+                item.order = order
+                item.save()
+            return redirect("orders:detail", pk=order.pk)
+    else:
+        order_form = OrderForm()
+        formset = OrderItemFormSet()
+    return render(
+        request,
+        "orders/order_create_with_items.html",
+        {"order_form": order_form, "formset": formset},
+    )
 
 
 class OrderUpdateView(UpdateView):
     model = Order
     template_name: str = "orders/order_update.html"
-    fields: list[str] = ["status", "items"]
+    fields: list[str] = ["status"]
     success_url: str = reverse_lazy("orders:list")
 
 
@@ -68,10 +81,29 @@ def revenue_view(request: HttpRequest) -> HttpResponse:
     Вычисляет общую выручку по заказам со статусом "оплачено".
     """
     revenue: float = (
-        Order.objects.filter(status="paid").aggregate(
-            total_revenue=Sum("total_price"))[
+        Order.objects.filter(status="paid").
+        aggregate(total_revenue=Sum("total_price"))[
             "total_revenue"
         ]
         or 0
     )
     return render(request, "orders/revenue.html", {"revenue": revenue})
+
+
+def add_order_item(request: HttpRequest, pk: int) -> HttpResponse:
+    """
+    Представление для добавления блюда к уже созданному заказу.
+    """
+    order = get_object_or_404(Order, pk=pk)
+    if request.method == "POST":
+        form = OrderItemForm(request.POST)
+        if form.is_valid():
+            order_item = form.save(commit=False)
+            order_item.order = order
+            order_item.save()
+            return redirect("orders:detail", pk=order.pk)
+    else:
+        form = OrderItemForm()
+    return render(
+        request, "orders/order_item_form.html", {"form": form, "order": order}
+    )

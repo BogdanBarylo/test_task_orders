@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% block title %}Добавить заказ с блюдами{% endblock %}
+
+{% block content %}
+<h2>Добавить заказ с блюдами</h2>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Информация о заказе</legend>
+        {{ order_form.as_p }}
+    </fieldset>
+    <fieldset>
+        <legend>Блюда</legend>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="order-item">
+                {{ form.as_p }}
+            </div>
+        {% endfor %}
+    </fieldset>
+    <button type="submit">Сохранить заказ</button>
+</form>
+<p><a href="{% url 'orders:list' %}">Вернуться к списку заказов</a></p>
+{% endblock %}

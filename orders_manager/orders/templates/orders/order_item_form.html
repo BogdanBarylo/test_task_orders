@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block title %}Добавить блюдо к заказу №{{ order.id }}{% endblock %}
+
+{% block content %}
+<h2>Добавить блюдо к заказу №{{ order.id }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить блюдо</button>
+</form>
+<p><a href="{% url 'orders:detail' order.id %}">Вернуться к заказу</a></p>
+{% endblock %}

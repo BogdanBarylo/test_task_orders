@@ -16,7 +16,7 @@
     </select>
     <button type="submit">Найти</button>
 </form>
-<p><a href="{% url 'orders:create' %}">Добавить заказ</a></p>
+<p><a href="{% url 'orders:create' %}">Добавить заказ с блюдами</a></p>
 <table border="1" cellspacing="0" cellpadding="5">
     <tr>
         <th>ID</th>
@@ -32,8 +32,8 @@
         <td>{{ order.table_number }}</td>
         <td>
             <ul>
-                {% for item in order.items %}
-                <li>{{ item.name }} – {{ item.price }}</li>
+                {% for item in order.order_items.all %}
+                    <li>{{ item.name }} – {{ item.price }} (Количество: {{ item.quantity }})</li>
                 {% endfor %}
             </ul>
         </td>
@@ -41,8 +41,9 @@
         <td>{{ order.get_status_display }}</td>
         <td>
             <a href="{% url 'orders:detail' order.id %}">Просмотр</a> |
-            <a href="{% url 'orders:update' order.id %}">Изменить заказ</a> |
-            <a href="{% url 'orders:delete' order.id %}">Удалить</a>
+            <a href="{% url 'orders:update' order.id %}">Изменить статус заказа</a> |
+            <a href="{% url 'orders:delete' order.id %}">Удалить</a> |
+            <a href="{% url 'orders:add_item' order.id %}">Добавить блюдо</a>
         </td>
     </tr>
     {% endfor %}
