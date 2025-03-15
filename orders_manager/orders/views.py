@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.http import HttpRequest, HttpResponse
@@ -66,7 +66,7 @@ def create_order_with_items(request: HttpRequest) -> HttpResponse:
 class OrderUpdateView(UpdateView):
     model = Order
     template_name: str = "orders/order_update.html"
-    fields: list[str] = ["status"]
+    fields: List[str] = ["status"]
     success_url: str = reverse_lazy("orders:list")
 
 
